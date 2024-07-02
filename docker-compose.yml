@@ -7,4 +7,4 @@ services:
       - 'RABBITMQ_DEFAULT_PASS=secret'
       - 'RABBITMQ_DEFAULT_USER=test-usr'
     ports:
-      - '5672'
+      - 5672:5672
