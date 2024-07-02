@@ -1,4 +1,4 @@
-package com.jdc.learning.message.sender;
+package com.jdc.learning.message.service;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -12,19 +12,33 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class HelloWorldSender {
+public class MessageSender {
 
 	@Autowired
 	private RabbitTemplate template;
 	@Autowired
 	private Queue queue;
 	
+	private AtomicInteger dots = new AtomicInteger(0);
 	private AtomicInteger count = new AtomicInteger(0);
-	
-	@Scheduled(fixedRate = 60000)
+
+	@Scheduled(fixedRate = 1500)
 	public void send() {
-		var value = count.incrementAndGet();
-		template.convertAndSend(queue.getName(), "Hello World %d".formatted(value));
-		log.info("Sending Message %d".formatted(value));
+		
+		var messageBuilder = new StringBuffer("Hello World ");
+		
+		if(dots.incrementAndGet() == 4) {
+			dots.set(1);
+		}
+		
+		for(var i = 0; i < dots.get(); i ++) {
+			messageBuilder.append(". ");
+		}
+		
+		messageBuilder.append(count.incrementAndGet());
+		
+		log.info("Send {}", messageBuilder.toString());
+		
+		template.convertAndSend(queue.getName(), messageBuilder.toString());
 	}
 }
