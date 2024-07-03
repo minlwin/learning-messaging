@@ -12,12 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class MessageReceivers {
 
-	@RabbitListener(queues = "#{autoDeleteQueue1.name}")
+	@RabbitListener(queues = "#{subscriberQueue1.name}")
 	public void receive1(String message) {
 		receive(1, message);
 	}
 	
-	@RabbitListener(queues = "#{autoDeleteQueue1.name}")
+	@RabbitListener(queues = "#{subscriberQueue2.name}")
 	public void receive2(String message) {
 		receive(2, message);
 	}

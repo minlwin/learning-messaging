@@ -1,6 +1,5 @@
 package com.jdc.learning.message;
 
-import org.springframework.amqp.core.AnonymousQueue;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.FanoutExchange;
@@ -18,23 +17,23 @@ public class Application {
 	}
 	
 	@Bean
-	Queue autoDeleteQueue1() {
-		return new AnonymousQueue();
+	Queue subscriberQueue1() {
+		return new Queue("subscriber1");
 	}
 	
 	@Bean
-	Queue autoDeleteQueue2() {
-		return new AnonymousQueue();
+	Queue subscriberQueue2() {
+		return new Queue("subscriber2");
 	}
 	
 	@Bean
-	Binding binding1(FanoutExchange exchange, Queue autoDeleteQueue1) {
-		return BindingBuilder.bind(autoDeleteQueue1).to(exchange);
+	Binding binding1() {
+		return BindingBuilder.bind(subscriberQueue1()).to(exchange());
 	}
 	
 	@Bean
-	Binding binding2(FanoutExchange exchange, Queue autoDeleteQueue2) {
-		return BindingBuilder.bind(autoDeleteQueue2).to(exchange);
+	Binding binding2() {
+		return BindingBuilder.bind(subscriberQueue2()).to(exchange());
 	}
 
 	public static void main(String[] args) {
