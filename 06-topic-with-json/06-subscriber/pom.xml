@@ -2,22 +2,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.1</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>com.jdc.learning</groupId>
+		<artifactId>06-topic-with-json</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	
-	<groupId>com.jdc.learning</groupId>
-	<artifactId>05-topic-exchange</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
-	
-	<properties>
-		<java.version>21</java.version>
-	</properties>
+	<artifactId>06-subscriber</artifactId>
 	
 	<dependencies>
 		<dependency>
@@ -40,7 +30,22 @@
 			<artifactId>spring-rabbit-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>06-commons</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-json</artifactId>
+		</dependency>
+				
 	</dependencies>
+		
+	<properties>
+		<java.version>21</java.version>
+	</properties>
+
 
 	<build>
 		<plugins>
@@ -58,10 +63,4 @@
 			</plugin>
 		</plugins>
 	</build>	
-	
-		
-	<modules>
-		<module>05-publisher</module>
-		<module>05-subscriber</module>
-	</modules>
 </project>
