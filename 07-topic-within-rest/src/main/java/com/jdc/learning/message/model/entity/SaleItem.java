@@ -5,13 +5,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class SaleItem {
 
 	@EmbeddedId
-	private SaleItemPk id;
+	private SaleItemPk id = new SaleItemPk();
 	
 	@MapsId("saleId")
 	@ManyToOne
@@ -22,4 +24,10 @@ public class SaleItem {
 	private Product product;
 	
 	private int quantity;
+
+	public SaleItem(Product product, int quantity) {
+		super();
+		this.product = product;
+		this.quantity = quantity;
+	}
 }

@@ -13,7 +13,7 @@ public class SaleItemPk implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Column(name = "sale_id")
-	private int saleId;
+	private Integer saleId;
 	@Column(name = "product_id")
-	private int productId;
+	private Integer productId;
 }

@@ -27,7 +27,7 @@ public class SalesApi {
 	}
 	
 	@PostMapping
-	SaleInfo create(@RequestBody SaleItemForm[] items) {
+	SaleInfo create(@RequestBody List<SaleItemForm> items) {
 		return service.create(items);
 	}
 

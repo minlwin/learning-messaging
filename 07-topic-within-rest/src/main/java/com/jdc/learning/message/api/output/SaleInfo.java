@@ -14,7 +14,7 @@ import jakarta.persistence.criteria.Root;
 public record SaleInfo(
 		int id,
 		LocalDateTime saleAt,
-		int saleItems,
+		long saleItems,
 		int totalAmount) {
 
 	public static void project(CriteriaBuilder cb, CriteriaQuery<SaleInfo> cq, Root<Sale> root) {
@@ -32,5 +32,15 @@ public record SaleInfo(
 		cq.groupBy(
 			root.get(Sale_.id),
 			root.get(Sale_.saleAt));
+	}
+	
+	public static SaleInfo from(Sale entity) {
+		return new SaleInfo(
+				entity.getId(), 
+				entity.getSaleAt(), 
+				entity.getSaleItem().size(), 
+				entity.getSaleItem().stream()
+					.mapToInt(a -> a.getQuantity() * a.getProduct().getPrice())
+					.sum());
 	}
 }
