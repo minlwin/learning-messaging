@@ -1,6 +1,7 @@
 package com.jdc.progress.mode.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -18,6 +19,6 @@ public class EscInvoicePk implements Serializable {
 	private String customerId;
 	
 	@Column(name = "last_date")
-	private String lastDate;
+	private LocalDate lastDate;
 
 }

@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-public class DeleteDirectoryUtils {
+public interface DeleteDirectoryUtils {
 
 	public static void delete(String storage, String directory) throws IOException {
 		

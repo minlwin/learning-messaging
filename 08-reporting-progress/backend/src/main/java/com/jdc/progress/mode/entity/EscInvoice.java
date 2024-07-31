@@ -2,9 +2,9 @@ package com.jdc.progress.mode.entity;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -17,15 +17,20 @@ public class EscInvoice {
 	@EmbeddedId
 	private EscInvoicePk id;
 	
-	@ManyToOne
-	@JoinColumn(name = "service", insertable = false, updatable = false)
-	@JoinColumn(name = "customer_id", insertable = false, updatable = false)
-	private EscCustomer customer;
-	
-	@ManyToOne
-	private EscUploadHistory history;
-
 	private int seqNumber;
+	@Column(nullable = false)
+	private String ledgerNo;
+	
+	@Column(nullable = false)
+	private String customerName;
+	
+	@Column(nullable = false)
+	private String meterNo;
+	
+	@Column(nullable = false)
+	private String address;
+	
+	private String billCode;
 	
 	private int usageUnit;
 	private int usageFees;
@@ -39,7 +44,10 @@ public class EscInvoice {
 	private int allTotal;
 	private Status status;
 
-	private LocalDate billLastDate;
+	private LocalDate mtbDueDate;
+	
+	@ManyToOne
+	private EscUploadHistory history;
 	
 	public enum Status {
 		New, Paid, Timeout

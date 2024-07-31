@@ -2,7 +2,7 @@ package com.jdc.progress.utils;
 
 import java.time.LocalDate;
 
-public class BillLastDateUtils {
+public interface BillLastDateUtils {
 
 	public static LocalDate calculate(LocalDate date) {
 		return switch (date.getDayOfWeek()) {
