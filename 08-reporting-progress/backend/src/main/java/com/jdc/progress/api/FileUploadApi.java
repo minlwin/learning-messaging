@@ -19,6 +19,7 @@ import com.jdc.progress.model.PageResult;
 import com.jdc.progress.service.EscInvoiceErrorService;
 import com.jdc.progress.service.EscUploadHistoryService;
 import com.jdc.progress.service.FileUploadService;
+import com.jdc.progress.utils.exceptions.ValidationException;
 
 @RestController
 @RequestMapping("upload")
@@ -37,7 +38,7 @@ public class FileUploadApi {
 	EscUploadResult upload(@Validated EscUploadForm form, BindingResult result) {
 		
 		if(result.hasErrors()) {
-			// Throw Exception
+			throw new ValidationException(result.getFieldErrors().stream().map(a -> a.getDefaultMessage()).toList());
 		}
 		
 		return uploadService.upload(form);
