@@ -2,17 +2,22 @@ package com.jdc.progress.api;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jdc.progress.api.output.EscServiceTownship;
+import com.jdc.progress.api.output.EscTownship;
+import com.jdc.progress.service.EscTownshipService;
 
 @RestController
 @RequestMapping("services")
 public class EscServicesApi {
+	
+	@Autowired
+	private EscTownshipService service;
 
 	@Value("${app.esc.services}")
 	private List<String> services;
@@ -22,8 +27,8 @@ public class EscServicesApi {
 		return services;
 	}
 	
-	@GetMapping("township/{service}")
-	public List<EscServiceTownship> searchTownshp(@PathVariable String service) {
-		return null;
+	@GetMapping("township/{system}")
+	public List<EscTownship> searchTownshp(@PathVariable String system) {
+		return service.search(system);
 	}
 }

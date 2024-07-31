@@ -1,4 +1,4 @@
-package com.jdc.progress.mode.entity;
+package com.jdc.progress.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

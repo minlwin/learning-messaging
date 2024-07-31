@@ -1,21 +1,26 @@
-package com.jdc.progress.mode.entity;
+package com.jdc.progress.model.entity;
 
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "ESC_INVOICE")
+@Table(name = "ESC_INVOICE", indexes = {
+		@Index(columnList = "township")
+})
 public class EscInvoice {
 
 	@EmbeddedId
 	private EscInvoicePk id;
+	
+	private String township;
 	
 	private int seqNumber;
 	@Column(nullable = false)

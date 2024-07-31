@@ -1,4 +1,4 @@
-package com.jdc.progress.mode.entity;
+package com.jdc.progress.model.entity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

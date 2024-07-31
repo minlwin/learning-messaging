@@ -2,7 +2,7 @@ package com.jdc.progress.api.output;
 
 import java.util.UUID;
 
-import com.jdc.progress.mode.entity.EscUploadHistory;
+import com.jdc.progress.model.entity.EscUploadHistory;
 
 public record EscUploadResult(
 		UUID id,

@@ -1,7 +1,5 @@
 package com.jdc.progress.api;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +15,9 @@ import com.jdc.progress.api.input.EscUploadHistorySearch;
 import com.jdc.progress.api.output.EscUploadErrorInfo;
 import com.jdc.progress.api.output.EscUploadHistoryListItem;
 import com.jdc.progress.api.output.EscUploadResult;
-import com.jdc.progress.mode.PageResult;
+import com.jdc.progress.model.PageResult;
+import com.jdc.progress.service.EscInvoiceErrorService;
+import com.jdc.progress.service.EscUploadHistoryService;
 import com.jdc.progress.service.FileUploadService;
 
 @RestController
@@ -25,7 +25,13 @@ import com.jdc.progress.service.FileUploadService;
 public class FileUploadApi {
 	
 	@Autowired
-	private FileUploadService service;
+	private FileUploadService uploadService;
+	
+	@Autowired
+	private EscUploadHistoryService historyService;
+	
+	@Autowired
+	private EscInvoiceErrorService errorService;
 
 	@PostMapping
 	EscUploadResult upload(@Validated EscUploadForm form, BindingResult result) {
@@ -34,21 +40,21 @@ public class FileUploadApi {
 			// Throw Exception
 		}
 		
-		return service.upload(form);
+		return uploadService.upload(form);
 	}
 	
 	@GetMapping
 	PageResult<EscUploadHistoryListItem> search(EscUploadHistorySearch form,
 			@RequestParam(required = false, defaultValue = "0") int page, 
 			@RequestParam(required = false, defaultValue = "10") int size) {
-		return null;
+		return historyService.search(form, page, size);
 	}
 	
 	@GetMapping("error/{history}")
-	List<EscUploadErrorInfo> searchError(@PathVariable("history") String historyId, 
+	PageResult<EscUploadErrorInfo> searchError(@PathVariable("history") String historyId, 
 			@RequestParam(required = false, defaultValue = "0") int page, 
 			@RequestParam(required = false, defaultValue = "10") int size) {
-		return null;
+		return errorService.searchError(historyId, page, size);
 	}
 	
 }

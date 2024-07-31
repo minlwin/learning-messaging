@@ -1,4 +1,4 @@
-package com.jdc.progress.mode.entity;
+package com.jdc.progress.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,8 +8,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "ESC_SERVICE")
-public class EscService {
+@Table(name = "ESC_SERVICE_TOWNSHIP")
+public class EscServiceTownship {
 
 	@Id
 	private String code;

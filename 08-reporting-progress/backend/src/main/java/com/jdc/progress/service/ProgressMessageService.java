@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.jdc.progress.api.output.ProgressMessage;
-import com.jdc.progress.mode.entity.EscUploadHistory.UploadState;
+import com.jdc.progress.model.entity.EscUploadHistory.UploadState;
 
 import lombok.extern.slf4j.Slf4j;
 

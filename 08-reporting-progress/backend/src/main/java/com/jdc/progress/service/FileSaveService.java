@@ -20,8 +20,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.jdc.progress.mode.entity.EscUploadHistory.UploadState;
-import com.jdc.progress.mode.repo.EscUploadHistoryRepo;
+import com.jdc.progress.model.entity.EscUploadHistory.UploadState;
+import com.jdc.progress.model.repo.EscUploadHistoryRepo;
 
 @Service
 public class FileSaveService {

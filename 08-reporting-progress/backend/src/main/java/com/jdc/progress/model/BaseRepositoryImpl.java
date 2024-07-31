@@ -1,5 +1,6 @@
-package com.jdc.progress.mode;
+package com.jdc.progress.model;
 
+import java.util.List;
 import java.util.function.Function;
 
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
@@ -27,6 +28,12 @@ public class BaseRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implem
 				.setFirstResult(page * size).setMaxResults(size).getResultList();
 		
 		return new PageResult<R>(contents, page, size, count);
+	}
+
+	@Override
+	public <R> List<R> search(Function<CriteriaBuilder, CriteriaQuery<R>> queryFunc) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

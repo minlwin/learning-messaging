@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.jdc.progress.mode.BaseRepositoryImpl;
+import com.jdc.progress.model.BaseRepositoryImpl;
 
 @Configuration
 @EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)

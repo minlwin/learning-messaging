@@ -15,11 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jdc.progress.mode.entity.EscInvoice;
-import com.jdc.progress.mode.entity.EscInvoicePk;
-import com.jdc.progress.mode.entity.EscUploadHistory.UploadState;
-import com.jdc.progress.mode.repo.EscInvoiceRepo;
-import com.jdc.progress.mode.repo.EscUploadHistoryRepo;
+import com.jdc.progress.model.entity.EscInvoice;
+import com.jdc.progress.model.entity.EscInvoicePk;
+import com.jdc.progress.model.entity.EscUploadHistory.UploadState;
+import com.jdc.progress.model.repo.EscInvoiceRepo;
+import com.jdc.progress.model.repo.EscUploadHistoryRepo;
 import com.jdc.progress.service.ProgressMessageService;
 import com.jdc.progress.service.StateMessageService;
 import com.jdc.progress.utils.BillLastDateUtils;
@@ -117,6 +117,12 @@ public class CreationMessageListener {
 		invoice.setRemainAmount(Integer.parseInt(array[15]));
 		invoice.setConnectionFees(Integer.parseInt(array[16]));
 		invoice.setAllTotal(Integer.parseInt(array[17]));
+		
+		String [] codes = pk.getCustomerId().split("-");
+
+		if(codes.length == 2) {
+			invoice.setTownship(codes[0]);
+		}
 		
 		return invoice;
 	}

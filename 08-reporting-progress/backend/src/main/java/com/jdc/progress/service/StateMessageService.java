@@ -7,7 +7,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jdc.progress.mode.entity.EscUploadHistory.UploadState;
+import com.jdc.progress.model.entity.EscUploadHistory.UploadState;
 
 @Service
 public class StateMessageService {

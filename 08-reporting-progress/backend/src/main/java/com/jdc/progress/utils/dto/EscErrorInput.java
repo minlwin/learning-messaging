@@ -3,8 +3,8 @@ package com.jdc.progress.utils.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.jdc.progress.mode.entity.EscUploadError;
-import com.jdc.progress.mode.entity.EscUploadHistory;
+import com.jdc.progress.model.entity.EscUploadError;
+import com.jdc.progress.model.entity.EscUploadHistory;
 
 public record EscErrorInput(
 		EscUploadHistory history,

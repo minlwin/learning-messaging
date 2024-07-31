@@ -15,9 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jdc.progress.api.input.EscUploadForm;
 import com.jdc.progress.api.output.EscUploadResult;
-import com.jdc.progress.mode.entity.EscUploadHistory;
-import com.jdc.progress.mode.entity.EscUploadHistory.UploadState;
-import com.jdc.progress.mode.repo.EscUploadHistoryRepo;
+import com.jdc.progress.model.entity.EscUploadHistory;
+import com.jdc.progress.model.entity.EscUploadHistory.UploadState;
+import com.jdc.progress.model.repo.EscUploadHistoryRepo;
 
 
 @Service

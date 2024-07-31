@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jdc.progress.mode.entity.EscUploadHistory.ErrorType;
-import com.jdc.progress.mode.entity.EscUploadHistory.UploadState;
-import com.jdc.progress.mode.repo.EscUploadHistoryRepo;
+import com.jdc.progress.model.entity.EscUploadHistory.ErrorType;
+import com.jdc.progress.model.entity.EscUploadHistory.UploadState;
+import com.jdc.progress.model.repo.EscUploadHistoryRepo;
 import com.jdc.progress.utils.DeleteDirectoryUtils;
 
 @Service

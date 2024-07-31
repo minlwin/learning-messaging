@@ -1,4 +1,4 @@
-package com.jdc.progress.mode;
+package com.jdc.progress.model;
 
 import java.util.List;
 

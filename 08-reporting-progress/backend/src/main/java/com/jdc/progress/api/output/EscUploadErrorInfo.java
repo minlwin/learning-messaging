@@ -1,34 +1,53 @@
 package com.jdc.progress.api.output;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.UUID;
+import com.jdc.progress.model.entity.EscUploadError;
+import com.jdc.progress.model.entity.EscUploadError_;
 
-import com.jdc.progress.mode.entity.EscService;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
-public interface EscUploadErrorInfo {
+public record EscUploadErrorInfo(
+		String seqNumber,
+		String ledgerNo,
+		String meterNo,
+		String customerId,
+		String customerName,
+		String address,
+		String billCode,
+		String lastDate,
+		String usageUnit,
+		String usageFees,
+		String serviceCharges,
+		String horsePower,
+		String discount,
+		String lastBalance,
+		String total,
+		String remainAmount,
+		String connectionFees,
+		String allTotal,
+		String error) {
 	
-	UUID getId();
-	
-	EscService getHistoryService();
-	
-	String getHistoryUploadBy();
-	LocalDateTime getHistoryUploadAt();
-
-	String getCustomerName();
-	String getCustomerLedgerName();
-	String getCustomerMeterNo();
-	String getCustomerAddress();
-	int getUsageUnit();
-	int getUsageFees();
-	int getServiceCharges();
-	int getHorsePower();
-	int getDiscount();
-	int getLastBalance();
-	int getTotal();
-	int getRemainAmount();
-	int getConnectionFees();
-	int getAllTotal();
-	LocalDate getLastPaidDate();
-	String getErrors();
+	public static void select(CriteriaQuery<EscUploadErrorInfo> cq, Root<EscUploadError> root) {
+		cq.multiselect(
+			root.get(EscUploadError_.seqNumber),
+			root.get(EscUploadError_.ledgerNo),
+			root.get(EscUploadError_.meterNo),
+			root.get(EscUploadError_.customerId),
+			root.get(EscUploadError_.customerName),
+			root.get(EscUploadError_.address),
+			root.get(EscUploadError_.billCode),
+			root.get(EscUploadError_.lastDate),
+			root.get(EscUploadError_.usageUnit),
+			root.get(EscUploadError_.usageFees),
+			root.get(EscUploadError_.serviceCharges),
+			root.get(EscUploadError_.horsePower),
+			root.get(EscUploadError_.discount),
+			root.get(EscUploadError_.lastBalance),
+			root.get(EscUploadError_.total),
+			root.get(EscUploadError_.remainAmount),
+			root.get(EscUploadError_.connectionFees),
+			root.get(EscUploadError_.allTotal),
+			root.get(EscUploadError_.error)
+		);
+	}
 }

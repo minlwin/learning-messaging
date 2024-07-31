@@ -16,11 +16,11 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import com.jdc.progress.mode.entity.EscUploadError;
-import com.jdc.progress.mode.entity.EscUploadHistory.ErrorType;
-import com.jdc.progress.mode.entity.EscUploadHistory.UploadState;
-import com.jdc.progress.mode.repo.EscUploadErrorRepo;
-import com.jdc.progress.mode.repo.EscUploadHistoryRepo;
+import com.jdc.progress.model.entity.EscUploadError;
+import com.jdc.progress.model.entity.EscUploadHistory.ErrorType;
+import com.jdc.progress.model.entity.EscUploadHistory.UploadState;
+import com.jdc.progress.model.repo.EscUploadErrorRepo;
+import com.jdc.progress.model.repo.EscUploadHistoryRepo;
 import com.jdc.progress.service.ProgressMessageService;
 import com.jdc.progress.service.StateMessageService;
 import com.jdc.progress.utils.DeleteDirectoryUtils;
