@@ -10,7 +10,7 @@ import com.jdc.progress.model.entity.EscServiceTownship;
 
 public interface EscServiceTownshipRepo extends BaseRepository<EscServiceTownship, String>{
 
-	@Query("select new com.jdc.progress.api.output.EscTownship(e) from EscServiceTownship e where e.service = ?")
+	@Query("select new com.jdc.progress.api.output.EscTownship(e) from EscServiceTownship e where e.service = ?1")
 	List<EscTownship> searchByService(String system);
 
 }
