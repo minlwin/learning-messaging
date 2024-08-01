@@ -30,7 +30,7 @@ public class ProgressCreationListener {
 			
 			var step = 0;
 			
-			while(step <= 10) {
+			while(step < 10) {
 				Thread.sleep(history.getDelayInSec() * 500);
 
 				log.info("Step is {} / 10", ++ step);
@@ -39,6 +39,8 @@ public class ProgressCreationListener {
 			}
 			
 			log.info("End Event {}", event.historyId());
+			
+			publisher.publishEvent(new ProgressEndEvent(history.getId().toString()));
 			
 		} catch (Exception e) {
 			throw new RuntimeException(e);

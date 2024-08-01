@@ -11,6 +11,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.jdc.learning.model.listener.ProgressEndEvent;
 import com.jdc.learning.model.listener.ProgressEvent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,21 @@ public class ProgessWsHandler extends TextWebSocketHandler {
 			if(null != session && session.isOpen()) {
 				session.sendMessage(new TextMessage(event.message()));
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@EventListener
+	void handle(ProgressEndEvent event) {
+		try {
+			log.info("Will Close : {}", event.historyId());
+			var session = sessions.get(event.historyId());
+			
+			if(null != session && session.isOpen()) {
+				session.close();
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

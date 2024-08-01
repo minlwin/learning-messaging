@@ -1,0 +1,70 @@
+<div class="container mt-4">
+  <h3><i class="bi-gear-wide-connected"></i> WebSocket Demo</h3>
+
+  <form [formGroup]="form" class="row">
+    <div class="col-auto">
+      <label class="form-label">Title</label>
+      <input formControlName="title" type="text" placeholder="Enter Title" class="form-control">
+    </div>
+    <div class="col-auto">
+      <label class="form-label">Interval</label>
+      <input formControlName="delayInSec" type="number" class="form-control">
+    </div>
+
+    <div class="col" style="padding-top: 2rem;">
+      <button (click)="send()" type="button" class="btn btn-danger">
+        <i class="bi-send"></i> Send
+      </button>
+    </div>
+  </form>
+
+  <div class="row mt-4">
+    <div class="col-8">
+      <div class="card">
+        <div class="card-body">
+          <h5>Send History</h5>
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Delay</th>
+                <th>Start At</th>
+                <th>End At</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (item of history(); track $index) {
+                <tr>
+                  <td>{{item.id}}</td>
+                  <td>{{item.title}}</td>
+                  <td>{{item.delayInSec}}</td>
+                  <td>{{item.startAt}}</td>
+                  <td>{{item.endAt}}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5>Message</h5>
+
+          <div class="list-group">
+            @for (item of progress.message(); track $index) {
+              <span class="list-group-item">
+                {{item}}
+              </span>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
