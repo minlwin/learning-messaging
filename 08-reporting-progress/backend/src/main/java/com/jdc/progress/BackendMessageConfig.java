@@ -7,9 +7,11 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import com.jdc.progress.model.entity.EscUploadHistory.UploadState;
 
+@EnableAsync
 @Configuration
 public class BackendMessageConfig {
 	
@@ -52,7 +54,7 @@ public class BackendMessageConfig {
 
 	@Bean
 	Binding errorQueueBinding() {
-		return BindingBuilder.bind(createQueue())
+		return BindingBuilder.bind(errorQueue())
 				.to(uploadStateExchange())
 				.with(UploadState.Error);
 	}
@@ -64,7 +66,7 @@ public class BackendMessageConfig {
 
 	@Bean
 	Binding successQueueBinding() {
-		return BindingBuilder.bind(createQueue())
+		return BindingBuilder.bind(successQueue())
 				.to(uploadStateExchange())
 				.with(UploadState.Success);
 	}

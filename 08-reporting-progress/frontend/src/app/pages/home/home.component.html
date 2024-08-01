@@ -1,1 +1,29 @@
-<p>home works!</p>
+<h3><i class="bi-cloud-upload"></i> Large File Upload</h3>
+
+<form [formGroup]="form" class="row">
+  <app-form-group [valid]="form.get('system')?.valid" class="col-auto" label="System">
+    <select formControlName="system" class="form-select">
+      <option value="">Select System</option>
+      @for (item of systems(); track $index) {
+        <option [value]="item">{{item}}</option>
+      }
+    </select>
+  </app-form-group>
+
+  <app-form-group [valid]="form.get('uploadBy')?.valid" class="col-auto" label="Upload By">
+    <input formControlName="uploadBy" type="text" class="form-control" placeholder="Enter Uploader">
+  </app-form-group>
+
+  <div class="col" style="padding-top: 2rem;">
+    <button [class.disabled]="!canUpload" (click)="fileSelect.click()" type="button" class="btn btn-danger">
+      <i class="bi-upload"></i> Upload
+    </button>
+  </div>
+  <div class="d-none">
+    <input (change)="upload(fileSelect.files)" #fileSelect type="file" >
+  </div>
+</form>
+
+<div>
+  <pre>{{progress.progress() | json}}</pre>
+</div>

@@ -17,8 +17,9 @@ public class ProgressWebSocketInterceptor extends HttpSessionHandshakeIntercepto
 		
 		var paths = request.getURI().getPath().split("/");
 		
-		if(paths.length >= 3) {
-			attributes.put("historyId", paths[2]);
+		if(paths.length >= 4) {
+			attributes.put("uploadId", paths[3]);
+			System.out.println(attributes);
 		}
 		
 		return true;

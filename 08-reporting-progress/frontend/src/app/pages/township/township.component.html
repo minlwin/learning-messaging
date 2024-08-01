@@ -1,1 +1,27 @@
-<p>township works!</p>
+<ul class="nav nav-underline">
+  @for (item of services(); track $index) {
+    <li class="nav-item">
+      <a (click)="loadTownship(item)" class="nav-link" [class.active]="selected() == item">{{item}}</a>
+    </li>
+  }
+</ul>
+
+<table class="mt-4 table table-striped">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Service Provider</th>
+      <th>Township</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (item of townships(); track $index) {
+      <tr>
+        <td>{{item.code}}</td>
+        <th>{{item.service}}</th>
+        <th>{{item.township}}</th>
+      </tr>
+    }
+  </tbody>
+</table>

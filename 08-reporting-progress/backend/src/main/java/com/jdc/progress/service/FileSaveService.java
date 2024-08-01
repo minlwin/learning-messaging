@@ -16,13 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jdc.progress.model.entity.EscUploadHistory.UploadState;
 import com.jdc.progress.model.repo.EscUploadHistoryRepo;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class FileSaveService {
 	
@@ -42,19 +44,28 @@ public class FileSaveService {
 	private EscUploadHistoryRepo historyRepo;
 
 	@Async
-	@Transactional(isolation = Isolation.REPEATABLE_READ)
+	@Transactional
 	public void save(UUID id, MultipartFile file) {
 		
+		log.info("Async Start -> {}", id.toString());
+			
 		// Read Excel file
 		var inputData = readExcelFile(id, file);
+		
+		if(null == inputData) {
+			return;
+		}
+		
 		Integer totalFiles = inputData.size();
 		Integer current = 0;
 
 		try {
 			
+			log.info("Save Files Start -> {}", id.toString());
+			
 			// Create Directory
 			var directory = Path.of(storage, id.toString());
-			Files.createDirectory(directory);
+			Files.createDirectories(directory);
 
 			for(var fileName : inputData.keySet()) {
 				
@@ -66,8 +77,6 @@ public class FileSaveService {
 				progressMessageService.send(id, UploadState.Save, current, totalFiles);
 			}
 			
-			// Send Message to proceed validation
-			stateMessageService.send(id, UploadState.Validate);
 			
 			// Update Upload History
 			historyRepo.findById(id).ifPresent(history -> {
@@ -75,19 +84,22 @@ public class FileSaveService {
 				history.setSavedAt(LocalDateTime.now());
 			});
 			
+			// Send Message to proceed validation
+			stateMessageService.send(id, UploadState.Validate);
+
 		} catch (Exception e) {
 			// Publish error message to progress queue
-			progressMessageService.sendError(id, UploadState.Save);
+			progressMessageService.sendError(id, UploadState.Save, e.getMessage());
 
 			// Send Message to proceed validation
 			stateMessageService.send(id, UploadState.Error);
-			
-			throw new RuntimeException(e);
 		}
 	}
 
 	private Map<String, List<String>> readExcelFile(UUID id, MultipartFile input) {
-		
+
+		log.info("Read Excel Start -> {}", id.toString());
+
 		try(var book = new XSSFWorkbook(input.getInputStream())) {
 			
 			var map = new LinkedHashMap<String, List<String>>();
@@ -128,11 +140,10 @@ public class FileSaveService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			// Publish error message to progress queue
-			progressMessageService.sendError(id, UploadState.Read);
+			progressMessageService.sendError(id, UploadState.Read, e.getMessage());
 			// Send Message to proceed validation
 			stateMessageService.send(id, UploadState.Error);
-			
-			throw new RuntimeException(e);
+			return null;
 		}
 	}
 		

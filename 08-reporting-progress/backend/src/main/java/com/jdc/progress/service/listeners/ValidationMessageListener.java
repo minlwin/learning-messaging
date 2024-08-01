@@ -12,7 +12,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -26,6 +25,9 @@ import com.jdc.progress.service.StateMessageService;
 import com.jdc.progress.utils.DeleteDirectoryUtils;
 import com.jdc.progress.utils.dto.EscErrorInput;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ValidationMessageListener {
 
@@ -44,10 +46,12 @@ public class ValidationMessageListener {
 	@Autowired
 	private EscUploadErrorRepo errorRepo;
 
+	@Transactional
 	@RabbitListener(queues = "#{validationQueue.name}")
-	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public void handle(String message) {
-		
+
+		log.info("Validation Start -> {}", message);
+
 		var historyId = UUID.fromString(message);
 		var history = historyRepo.getReferenceById(historyId);
 
@@ -83,23 +87,24 @@ public class ValidationMessageListener {
 				createInvoiceError(historyId, errors);
 				
 			} else {
-				// Next Process
-				stateMessageService.send(historyId, UploadState.Create);
-				
 				// Update Upload History
 				historyRepo.findById(historyId).ifPresent(entity -> {
 					entity.setState(UploadState.Validate);
 					entity.setValidatedAt(LocalDateTime.now());
 				});
+
+				// Next Process
+				stateMessageService.send(historyId, UploadState.Create);
 			}
 			
 		} catch (Exception e) {
+			e.printStackTrace();
+
 			// Send Progress Message
-			progressMessageService.sendError(historyId, UploadState.Validate);
+			progressMessageService.sendError(historyId, UploadState.Validate, e.getMessage());
 
 			// Next Process
 			stateMessageService.send(historyId, UploadState.Error);
-			throw new RuntimeException(e);
 		}
 		
 	}
@@ -129,7 +134,7 @@ public class ValidationMessageListener {
 	private void createInvoiceError(UUID historyId, List<EscUploadError> errors) {
 		
 		// Send Progress Message
-		progressMessageService.sendError(historyId, UploadState.Validate);
+		progressMessageService.sendError(historyId, UploadState.Validate, "Invalid errors.");
 
 		// Update Upload History
 		historyRepo.findById(historyId).ifPresent(history -> {

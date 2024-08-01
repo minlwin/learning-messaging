@@ -19,6 +19,7 @@ public class ApiExceptionHandler {
 	@ExceptionHandler
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	List<String> handle(Exception e) {
+		e.printStackTrace();
 		return List.of(e.getMessage());
 	}
 }

@@ -12,8 +12,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.jdc.progress.model.entity.EscInvoice;
 import com.jdc.progress.model.entity.EscInvoicePk;
@@ -24,7 +24,10 @@ import com.jdc.progress.service.ProgressMessageService;
 import com.jdc.progress.service.StateMessageService;
 import com.jdc.progress.utils.BillLastDateUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class CreationMessageListener {
 
 	private static DateTimeFormatter DF = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -44,9 +47,11 @@ public class CreationMessageListener {
 	@Autowired
 	private EscInvoiceRepo invoiceRepo;
 	
+	@Transactional
 	@RabbitListener(queues = "#{createQueue.name}")
-	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public void handle(String message) {
+
+		log.info("DB Insert Start -> {}", message);
 		
 		var historyId = UUID.fromString(message);
 		var history = historyRepo.getReferenceById(historyId);
@@ -82,11 +87,11 @@ public class CreationMessageListener {
 			stateMessageService.send(historyId, UploadState.Success);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			// Send Progress Message
-			progressMessageService.sendError(historyId, UploadState.Create);
+			progressMessageService.sendError(historyId, UploadState.Create, e.getMessage());
 			// Next Process
 			stateMessageService.send(historyId, UploadState.Error);
-			throw new RuntimeException(e);
 		}
 	}
 
@@ -101,22 +106,22 @@ public class CreationMessageListener {
 		
 		var invoice = new EscInvoice();
 		invoice.setId(pk);
-		invoice.setSeqNumber(Integer.parseInt(array[0]));
+		invoice.setSeqNumber(parseInt(array[0]));
 		invoice.setLedgerNo(array[1]);
 		invoice.setMeterNo(array[3]);
 		invoice.setCustomerName(array[4]);
 		invoice.setAddress(array[5]);
 		invoice.setBillCode(array[6]);
-		invoice.setUsageUnit(Integer.parseInt(array[8]));
-		invoice.setUsageFees(Integer.parseInt(array[9]));
-		invoice.setServiceCharges(Integer.parseInt(array[10]));
-		invoice.setHorsePower(Integer.parseInt(array[11]));
-		invoice.setDiscount(Integer.parseInt(array[12]));
-		invoice.setLastBalance(Integer.parseInt(array[13]));
-		invoice.setTotal(Integer.parseInt(array[14]));
-		invoice.setRemainAmount(Integer.parseInt(array[15]));
-		invoice.setConnectionFees(Integer.parseInt(array[16]));
-		invoice.setAllTotal(Integer.parseInt(array[17]));
+		invoice.setUsageUnit(parseInt(array[8]));
+		invoice.setUsageFees(parseInt(array[9]));
+		invoice.setServiceCharges(parseInt(array[10]));
+		invoice.setHorsePower(parseInt(array[11]));
+		invoice.setDiscount(parseInt(array[12]));
+		invoice.setLastBalance(parseInt(array[13]));
+		invoice.setTotal(parseInt(array[14]));
+		invoice.setRemainAmount(parseInt(array[15]));
+		invoice.setConnectionFees(parseInt(array[16]));
+		invoice.setAllTotal(parseInt(array[17]));
 		
 		String [] codes = pk.getCustomerId().split("-");
 
@@ -125,6 +130,14 @@ public class CreationMessageListener {
 		}
 		
 		return invoice;
+	}
+	
+	private static Integer parseInt(String str) {
+		if(StringUtils.hasLength(str)) {
+			return Integer.parseInt(str);
+		}
+		
+		return null;
 	}
 
 }

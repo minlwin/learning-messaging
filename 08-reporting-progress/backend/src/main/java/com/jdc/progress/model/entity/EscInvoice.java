@@ -37,16 +37,16 @@ public class EscInvoice {
 	
 	private String billCode;
 	
-	private int usageUnit;
-	private int usageFees;
-	private int serviceCharges;
-	private int horsePower;
-	private int discount;
-	private int lastBalance;
-	private int total;
-	private int remainAmount;
-	private int connectionFees;
-	private int allTotal;
+	private Integer usageUnit;
+	private Integer usageFees;
+	private Integer serviceCharges;
+	private Integer horsePower;
+	private Integer discount;
+	private Integer lastBalance;
+	private Integer total;
+	private Integer remainAmount;
+	private Integer connectionFees;
+	private Integer allTotal;
 	private Status status;
 
 	private LocalDate mtbDueDate;

@@ -7,7 +7,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jdc.progress.model.entity.EscUploadHistory.ErrorType;
@@ -15,6 +14,9 @@ import com.jdc.progress.model.entity.EscUploadHistory.UploadState;
 import com.jdc.progress.model.repo.EscUploadHistoryRepo;
 import com.jdc.progress.utils.DeleteDirectoryUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ErrorMessageListener {
 
@@ -23,18 +25,21 @@ public class ErrorMessageListener {
 	@Autowired
 	private EscUploadHistoryRepo historyRepo;
 
+	@Transactional
 	@RabbitListener(queues = "#{errorQueue.name}")
-	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public void handle(String message) {
-		
+	
 		try {
+			log.info("Error -> {}", message);
+			
+			DeleteDirectoryUtils.delete(storage, message);
+
 			historyRepo.findById(UUID.fromString(message)).ifPresent(history -> {
 				history.setState(UploadState.Error);
 				history.setErrorType(ErrorType.System);
 				history.setFinishedAt(LocalDateTime.now());
 			});
 			
-			DeleteDirectoryUtils.delete(storage, message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

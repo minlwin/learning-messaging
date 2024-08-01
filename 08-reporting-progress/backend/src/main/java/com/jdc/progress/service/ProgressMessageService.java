@@ -10,9 +10,7 @@ import com.jdc.progress.utils.dto.ProgressEndEvent;
 import com.jdc.progress.utils.dto.ProgressUpdateEvent;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProgressMessageService {
@@ -21,13 +19,11 @@ public class ProgressMessageService {
 
 	public void send(UUID id, UploadState state, Integer current, Integer totalFiles) {
 		var progress = new ProgressUpdateEvent(id.toString(), state, current, totalFiles);
-		log.info("progress", progress);
 		publisher.publishEvent(progress);
 	}
 
-	public void sendError(UUID id, UploadState state) {
-		var progress = new ProgressEndEvent(null, state);
-		log.info("progress", progress);
+	public void sendError(UUID id, UploadState state, String message) {
+		var progress = new ProgressEndEvent(id.toString(), state, message);
 		publisher.publishEvent(progress);
 	}
 

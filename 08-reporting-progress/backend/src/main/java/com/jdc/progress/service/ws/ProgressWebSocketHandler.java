@@ -55,14 +55,14 @@ public class ProgressWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		
-		if(session.getAttributes().get("historyId") instanceof String historyId && StringUtils.hasLength(historyId)) {
+		if(session.getAttributes().get("uploadId") instanceof String historyId && StringUtils.hasLength(historyId)) {
 			sessions.put(historyId, session);
 		}
 	}
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		if(session.getAttributes().get("historyId") instanceof String historyId && StringUtils.hasLength(historyId)) {
+		if(session.getAttributes().get("uploadId") instanceof String historyId && StringUtils.hasLength(historyId)) {
 			sessions.remove(historyId);
 		}
 	}
