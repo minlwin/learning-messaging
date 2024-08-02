@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jdc.progress.api.input.EscUploadForm;
 import com.jdc.progress.api.input.EscUploadHistorySearch;
 import com.jdc.progress.api.output.EscUploadErrorInfo;
+import com.jdc.progress.api.output.EscUploadHistoryDetails;
 import com.jdc.progress.api.output.EscUploadHistoryListItem;
 import com.jdc.progress.api.output.EscUploadResult;
 import com.jdc.progress.model.PageResult;
@@ -44,6 +45,11 @@ public class FileUploadApi {
 		return uploadService.upload(form);
 	}
 	
+	@GetMapping("{id}")
+	EscUploadHistoryDetails findById(@PathVariable("id") String id) {
+		return uploadService.findById(id);
+	}
+	
 	@GetMapping
 	PageResult<EscUploadHistoryListItem> search(EscUploadHistorySearch form,
 			@RequestParam(required = false, defaultValue = "0") int page, 
@@ -51,8 +57,8 @@ public class FileUploadApi {
 		return historyService.search(form, page, size);
 	}
 	
-	@GetMapping("error/{history}")
-	PageResult<EscUploadErrorInfo> searchError(@PathVariable("history") String historyId, 
+	@GetMapping("error")
+	PageResult<EscUploadErrorInfo> searchError(@RequestParam("history") String historyId, 
 			@RequestParam(required = false, defaultValue = "0") int page, 
 			@RequestParam(required = false, defaultValue = "10") int size) {
 		return errorService.searchError(historyId, page, size);

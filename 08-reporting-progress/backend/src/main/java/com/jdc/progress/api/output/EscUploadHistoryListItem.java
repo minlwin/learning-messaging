@@ -40,7 +40,7 @@ public record EscUploadHistoryListItem(
 			root.get(EscUploadHistory_.savedAt),
 			root.get(EscUploadHistory_.validatedAt),
 			root.get(EscUploadHistory_.createdAt),
-			root.get(EscUploadHistory_.fileName),
+			root.get(EscUploadHistory_.finishedAt),
 			root.get(EscUploadHistory_.errorType),
 			root.get(EscUploadHistory_.records),
 			root.get(EscUploadHistory_.errors)

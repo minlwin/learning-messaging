@@ -1,23 +1,24 @@
 import { Injectable, signal } from "@angular/core"
+import { environment } from "../../../environments/environment"
 
 @Injectable({providedIn: 'root'})
 export class ProgressListener {
 
   progress = signal<Progress | undefined>(undefined)
+  connected = signal<boolean>(false)
 
   connect(historyId:string) {
 
-    const ws = new WebSocket(`ws://localhost:8080/esc/progress/${historyId}`)
+    const ws = new WebSocket(`${environment.wsUrl}/progress/${historyId}`)
 
-    ws.onclose = () => this.progress.set(undefined)
+    ws.onopen = () => this.connected.set(true)
+    ws.onclose = () => this.connected.set(false)
+    ws.onerror = () => this.connected.set(false)
 
     ws.onmessage = (message) => {
-      console.log(message.data)
-      this.progress.set(message.data)
+      this.progress.set(JSON.parse(message.data))
     }
-
   }
-
 }
 
 export interface Progress {
@@ -25,6 +26,6 @@ export interface Progress {
   state:string
   done?:number
   total?:number
-  percent?:number
+  percent?:string
   message?:string
 }

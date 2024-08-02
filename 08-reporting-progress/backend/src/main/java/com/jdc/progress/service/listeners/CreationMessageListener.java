@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 
 import com.jdc.progress.model.entity.EscInvoice;
 import com.jdc.progress.model.entity.EscInvoicePk;
+import com.jdc.progress.model.entity.EscInvoice.Status;
 import com.jdc.progress.model.entity.EscUploadHistory.UploadState;
 import com.jdc.progress.model.repo.EscInvoiceRepo;
 import com.jdc.progress.model.repo.EscUploadHistoryRepo;
@@ -124,6 +125,8 @@ public class CreationMessageListener {
 		invoice.setAllTotal(parseInt(array[17]));
 		
 		String [] codes = pk.getCustomerId().split("-");
+		
+		invoice.setStatus(Status.New);
 
 		if(codes.length == 2) {
 			invoice.setTownship(codes[0]);

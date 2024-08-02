@@ -1,1 +1,48 @@
-<p>errors works!</p>
+<h3><i class="bi-exclamation-circle"></i> Upload Errors</h3>
+
+<!-- Upload Informations -->
+@if (details()) {
+  <div class="card">
+    <div class="card-body">
+      <pre>{{details() | json}}</pre>
+    </div>
+  </div>
+}
+
+<!-- Error List -->
+<table class="table table-striped mb-4">
+  <thead>
+    <tr>
+      <th>Seq No</th>
+      <th>Ledger</th>
+      <th>Customer ID</th>
+      <th>Due Date</th>
+      <th>Unit</th>
+      <th>Sub Total</th>
+      <th>Remains</th>
+      <th>Total</th>
+      <th>Error</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (item of contents(); track $index) {
+      <tr>
+        <td>{{item.seqNumber}}</td>
+        <td>{{item.ledgerNo}}</td>
+        <td>{{item.customerId}}</td>
+        <td>{{item.lastDate}}</td>
+        <td>{{item.usageUnit}}</td>
+        <td>{{item.total}}</td>
+        <td>{{item.remainAmount}}</td>
+        <td>{{item.allTotal}}</td>
+        <td>{{item.error}}</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<!-- Pagination -->
+@if (pager()) {
+  <app-pagination [pager]="pager()"></app-pagination>
+}

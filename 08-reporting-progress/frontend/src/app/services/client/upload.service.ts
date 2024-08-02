@@ -19,7 +19,15 @@ export class UploadService {
     return this.http.post<any>(URL, form)
   }
 
+  findById(id:string) {
+    return this.http.get<any>(`${URL}/${id}`)
+  }
+
   search(form:any) {
-    return this.http.get(URL, {params: form})
+    return this.http.get<any>(URL, {params: form})
+  }
+
+  searchError(form:any) {
+    return this.http.get<any>(`${URL}/error`, {params: form})
   }
 }

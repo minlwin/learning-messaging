@@ -35,6 +35,8 @@ public class EscInvoiceService {
 			EscInvoiceInfo.select(cq, root);
 			cq.where(form.where(cb, root));
 			
+			cq.orderBy(cb.asc(root.get(EscInvoice_.ledgerNo)));
+			
 			return cq;
 		};
 	}

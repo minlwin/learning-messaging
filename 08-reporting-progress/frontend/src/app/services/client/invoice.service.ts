@@ -12,6 +12,6 @@ export class InvoiceService {
   constructor(private http:HttpClient) { }
 
   search(form:any) {
-    return this.http.get<any[]>(URL, {params: form})
+    return this.http.get<any>(URL, {params: form})
   }
 }

@@ -1,0 +1,70 @@
+<h3><i class="bi-flag"></i> Invioces</h3>
+
+<!-- Search Form -->
+<form [formGroup]="form" class="row mb-4">
+  <app-form-group class="col-auto" label="System">
+    <select formControlName="service" class="form-select">
+      <option value="">All Service</option>
+      @for (item of systems(); track $index) {
+        <option [value]="item">{{item}}</option>
+      }
+    </select>
+  </app-form-group>
+
+  <app-form-group class="col-auto" label="Status">
+    <select formControlName="status" class="form-select">
+      <option value="">All Status</option>
+      @for (item of statusList; track $index) {
+        <option [value]="item">{{item}}</option>
+      }
+    </select>
+  </app-form-group>
+
+  <app-form-group class="col-auto" label="Customer Code">
+    <input formControlName="customerCode" type="text" class="form-control" placeholder="Search Customer Code">
+  </app-form-group>
+
+  <div class="col" style="padding-top: 2rem;">
+    <button (click)="search()" type="button" class="btn btn-outline-primary">
+      <i class="bi-search"></i> Search
+    </button>
+  </div>
+</form>
+
+<!-- Table -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>System</th>
+      <th>Ledger No.</th>
+      <th>Customer Code</th>
+      <th>Customer Name</th>
+      <th>Due Date</th>
+      <th class="text-end">Usage Unit</th>
+      <th class="text-end">Unit Price</th>
+      <th class="text-end">Sub Total</th>
+      <th class="text-end">Total Amount</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (item of contents(); track $index) {
+      <tr>
+        <td>{{item.id.service}}</td>
+        <td>{{item.ledgerNo}}</td>
+        <td>{{item.id.customerId}}</td>
+        <td>{{item.customerName}}</td>
+        <td>{{item.mtbDueDate}}</td>
+        <td class="text-end">{{item.usageUnit | number}}</td>
+        <td class="text-end">{{item.usageFees | number}}</td>
+        <td class="text-end">{{item.total | number}}</td>
+        <td class="text-end">{{item.allTotal | number}}</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<!-- Pager -->
+@if (pager()) {
+  <app-pagination [pager]="pager()" (onPageChange)="onPageChage($event)" (onSizeChange)="onSizeChange($event)"></app-pagination>
+}

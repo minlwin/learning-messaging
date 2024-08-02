@@ -1,0 +1,9 @@
+@if (progress() != undefined) {
+  <label class="form-label">
+    {{state() || 'Progress'}}
+  </label>
+  <div class="progress d-flex" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height: 2.4rem;" >
+    <div class="progress-bar" [style.width]="percent() || '0%'" ></div>
+  </div>
+}
+

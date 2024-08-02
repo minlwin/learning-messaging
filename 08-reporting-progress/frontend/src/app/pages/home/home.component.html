@@ -14,16 +14,63 @@
     <input formControlName="uploadBy" type="text" class="form-control" placeholder="Enter Uploader">
   </app-form-group>
 
-  <div class="col" style="padding-top: 2rem;">
+  <div class="col-auto" style="padding-top: 2rem;">
+    <div class="d-none">
+      <input (change)="upload(fileSelect.files)" #fileSelect type="file" >
+    </div>
     <button [class.disabled]="!canUpload" (click)="fileSelect.click()" type="button" class="btn btn-danger">
       <i class="bi-upload"></i> Upload
     </button>
   </div>
-  <div class="d-none">
-    <input (change)="upload(fileSelect.files)" #fileSelect type="file" >
-  </div>
+
+  @if (progress.connected()) {
+    <div class="col">
+      <app-progress [progress]="progress.progress()"></app-progress>
+    </div>
+  }
+
 </form>
 
-<div>
-  <pre>{{progress.progress() | json}}</pre>
-</div>
+<!-- Upload History Table -->
+<table class="table table-striped my-4">
+  <thead>
+    <tr>
+      <th>System</th>
+      <th>File</th>
+      <th>Upload By</th>
+      <th>State</th>
+      <th>Upload At</th>
+      <th>Finish At</th>
+      <th>Records</th>
+      <th>Errors</th>
+      <th class="text-center"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (item of contents(); track $index) {
+      <tr>
+        <td>{{item.system}}</td>
+        <td>{{item.fileName}}</td>
+        <td>{{item.uploadBy}}</td>
+        <td>{{item.state}}</td>
+        <td>{{item.uploadAt}}</td>
+        <td>{{item.finishedAt}}</td>
+        <td>{{item.records}}</td>
+        <td>{{item.errors}}</td>
+        <th class="text-center">
+          @if (item.errors > 0) {
+            <a class="icon-link" [routerLink]="['/errors']" [queryParams]="{id: item.id}"></a>
+          }
+        </th>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<!-- Pagination -->
+@if (pager()) {
+  <app-pagination [pager]="pager()"
+    (onPageChange)="onPageChage($event)"
+    (onSizeChange)="onSizeChange($event)"></app-pagination>
+}

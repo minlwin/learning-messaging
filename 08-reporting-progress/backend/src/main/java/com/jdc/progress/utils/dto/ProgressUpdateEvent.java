@@ -8,7 +8,8 @@ public record ProgressUpdateEvent(
 		Integer done,
 		Integer total) {
 
-	public double getPersent() {
-		return done.doubleValue() / total.doubleValue();
+	public String getPercent() {
+		Double percent = done.doubleValue() / total.doubleValue() * 100;
+		return "%d%%".formatted(percent.intValue());
 	}
 }
