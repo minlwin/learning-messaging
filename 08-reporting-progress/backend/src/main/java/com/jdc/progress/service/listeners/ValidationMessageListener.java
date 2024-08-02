@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,26 +24,21 @@ import com.jdc.progress.service.StateMessageService;
 import com.jdc.progress.utils.DeleteDirectoryUtils;
 import com.jdc.progress.utils.dto.EscErrorInput;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class ValidationMessageListener {
 
 	@Value("${app.esc.storage-path}")
 	private String storage;
 
-	@Autowired
-	private ProgressMessageService progressMessageService;
-	
-	@Autowired
-	private StateMessageService stateMessageService;
-	
-	@Autowired
-	private EscUploadHistoryRepo historyRepo;
-	
-	@Autowired
-	private EscUploadErrorRepo errorRepo;
+	private final ProgressMessageService progressMessageService;
+	private final StateMessageService stateMessageService;
+	private final EscUploadHistoryRepo historyRepo;
+	private final EscUploadErrorRepo errorRepo;
 
 	@Transactional
 	@RabbitListener(queues = "#{validationQueue.name}")

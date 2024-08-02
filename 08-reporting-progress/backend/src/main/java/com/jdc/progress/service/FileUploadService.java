@@ -3,7 +3,6 @@ package com.jdc.progress.service;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,15 +14,15 @@ import com.jdc.progress.model.entity.EscUploadHistory;
 import com.jdc.progress.model.entity.EscUploadHistory.UploadState;
 import com.jdc.progress.model.repo.EscUploadHistoryRepo;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Service
+@RequiredArgsConstructor
 public class FileUploadService {
 	
-	@Autowired
-	private FileSaveService storageService;
-	
-	@Autowired
-	private EscUploadHistoryRepo historyRepo;
+	private final FileSaveService storageService;
+	private final EscUploadHistoryRepo historyRepo;
 	
 	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public EscUploadResult upload(EscUploadForm form) {

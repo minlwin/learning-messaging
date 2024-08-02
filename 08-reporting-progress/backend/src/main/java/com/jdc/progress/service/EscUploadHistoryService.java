@@ -2,7 +2,6 @@ package com.jdc.progress.service;
 
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,13 +14,14 @@ import com.jdc.progress.model.repo.EscUploadHistoryRepo;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class EscUploadHistoryService {
 	
-	@Autowired
-	private EscUploadHistoryRepo repo;
+	private final EscUploadHistoryRepo repo;
 	
 	public PageResult<EscUploadHistoryListItem> search(EscUploadHistorySearch form, int page, int size) {
 		return repo.search(queryFunc(form), countFunc(form), page, size);

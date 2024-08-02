@@ -3,7 +3,6 @@ package com.jdc.progress.service;
 import java.util.UUID;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,13 +15,14 @@ import com.jdc.progress.model.repo.EscUploadErrorRepo;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class EscInvoiceErrorService {
 	
-	@Autowired
-	private EscUploadErrorRepo repo;
+	private final EscUploadErrorRepo repo;
 
 	public PageResult<EscUploadErrorInfo> searchError(String historyId, int page, int size) {
 		

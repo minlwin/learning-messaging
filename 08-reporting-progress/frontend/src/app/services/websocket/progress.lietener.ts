@@ -11,7 +11,10 @@ export class ProgressListener {
 
     const ws = new WebSocket(`${environment.wsUrl}/progress/${historyId}`)
 
-    ws.onopen = () => this.connected.set(true)
+    ws.onopen = () => {
+      this.connected.set(true)
+      this.progress.set(undefined)
+    }
     ws.onclose = () => this.connected.set(false)
     ws.onerror = () => this.connected.set(false)
 

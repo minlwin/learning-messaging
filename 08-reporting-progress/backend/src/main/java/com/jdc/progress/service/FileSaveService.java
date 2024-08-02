@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -22,10 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jdc.progress.model.entity.EscUploadHistory.UploadState;
 import com.jdc.progress.model.repo.EscUploadHistoryRepo;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class FileSaveService {
 	
 	@Value("${app.esc.temp-file-size}")
@@ -34,14 +35,9 @@ public class FileSaveService {
 	@Value("${app.esc.storage-path}")
 	private String storage;
 	
-	@Autowired
-	private ProgressMessageService progressMessageService;
-	
-	@Autowired
-	private StateMessageService stateMessageService;
-	
-	@Autowired
-	private EscUploadHistoryRepo historyRepo;
+	private final ProgressMessageService progressMessageService;
+	private final StateMessageService stateMessageService;
+	private final EscUploadHistoryRepo historyRepo;
 
 	@Async
 	@Transactional
@@ -58,6 +54,7 @@ public class FileSaveService {
 		
 		Integer totalFiles = inputData.size();
 		Integer current = 0;
+		progressMessageService.send(id, UploadState.Save, current, totalFiles);
 
 		try {
 			
@@ -112,6 +109,7 @@ public class FileSaveService {
 				String sliptFileName = null;
 				List<String> lines = null;
 				Integer splitedFiles = getSplitedFile(sheet.getLastRowNum());
+				progressMessageService.send(id, UploadState.Read, 0, splitedFiles);
 				
 				for(int rowNum = 1, split = 0, file = 0; rowNum <= sheet.getLastRowNum(); rowNum ++, split ++) {
 					
