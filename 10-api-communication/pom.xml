@@ -37,5 +37,6 @@
 		<module>agent-api</module>
 		<module>consumer-api</module>
 		<module>core-domain</module>
+		<module>core-service</module>
 	</modules>
 </project>
