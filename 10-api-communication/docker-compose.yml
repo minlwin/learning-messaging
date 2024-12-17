@@ -1,0 +1,20 @@
+networks:
+  communication:
+volumes:
+  communication-db:
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: communication-db
+    environment:
+      - TZ=Asia/Yangon
+      - POSTGRES_USER=communication
+      - POSTGRES_PASSWORD=communication
+      - POSTGRES_DB=communication
+    networks:
+      - communication
+    ports:
+      - 5432:5432
+    volumes:
+      - communication-db:/var/lib/postgresql/data
