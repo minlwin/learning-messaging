@@ -1,4 +1,4 @@
-package com.jdc.agent.api;
+package com.jdc.wallet.api;
 
 import java.util.List;
 
@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.jdc.agent.api.input.AgentAccountForm;
-import com.jdc.agent.api.output.AgentAccountInfo;
-import com.jdc.agent.ws.AgentAccountManagementService;
+import com.jdc.wallet.api.input.WalletAccountForm;
+import com.jdc.wallet.api.output.WalletAccountInfo;
+import com.jdc.wallet.service.AccountManagementService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,21 +23,20 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("account")
 public class AccountManagementApi {
 	
-	private final AgentAccountManagementService service;
+	private final AccountManagementService service;
 
 	@GetMapping
-	List<AgentAccountInfo> findAll() {
+	List<WalletAccountInfo> findAll() {
 		return service.findAll();
 	}
 	
 	@PostMapping
-	AgentAccountInfo create(@Validated @RequestBody AgentAccountForm form, BindingResult result) {
+	WalletAccountInfo create(@Validated @RequestBody WalletAccountForm form, BindingResult result) {
 		return service.create(form);
 	}
 	
 	@PostMapping("upload")
-	List<AgentAccountInfo> upload(@RequestBody MultipartFile file) {
+	List<WalletAccountInfo> upload(@RequestParam MultipartFile file) {
 		return service.upload(file);
 	}
-	
 }
