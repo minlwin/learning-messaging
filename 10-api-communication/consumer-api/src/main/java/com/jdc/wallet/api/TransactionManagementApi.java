@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jdc.wallet.api.input.TransactionSearch;
 import com.jdc.wallet.api.output.TransactionInfo;
 import com.jdc.wallet.service.TransactionManagementService;
 
@@ -20,8 +21,8 @@ public class TransactionManagementApi {
 	private final TransactionManagementService service;
 
 	@GetMapping
-	List<TransactionInfo> findAll() {
-		return service.findAll();
+	List<TransactionInfo> search(TransactionSearch search) {
+		return service.search(search);
 	}
 	
 	@GetMapping("{id}")

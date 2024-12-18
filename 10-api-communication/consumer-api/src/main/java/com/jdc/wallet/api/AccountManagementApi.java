@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jdc.wallet.api.input.WalletAccountForm;
+import com.jdc.wallet.api.input.WalletAccountSearch;
 import com.jdc.wallet.api.output.WalletAccountInfo;
 import com.jdc.wallet.service.AccountManagementService;
 
@@ -26,8 +27,8 @@ public class AccountManagementApi {
 	private final AccountManagementService service;
 
 	@GetMapping
-	List<WalletAccountInfo> findAll() {
-		return service.findAll();
+	List<WalletAccountInfo> search(WalletAccountSearch search) {
+		return service.search(search);
 	}
 	
 	@PostMapping

@@ -18,3 +18,10 @@ services:
       - 5432:5432
     volumes:
       - communication-db:/var/lib/postgresql/data
+
+  amqp:
+    image: rabbitmq:management
+    container_name: communication-mq
+    environment:
+      - RABBITMQ_DEFAULT_PASS=secret
+      - RABBITMQ_DEFAULT_USER=mqclient

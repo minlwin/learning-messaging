@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jdc.agent.api.input.TransactionForm;
+import com.jdc.agent.api.input.TransactionSearch;
 import com.jdc.agent.api.output.TransactionInfo;
 import com.jdc.agent.ws.TransactionManagementService;
 
@@ -25,8 +26,8 @@ public class TransactionManagementApi {
 	private final TransactionManagementService service;
 
 	@GetMapping
-	List<TransactionInfo> findAll() {
-		return service.findAll();
+	List<TransactionInfo> search(TransactionSearch search) {
+		return service.search(search);
 	}
 	
 	@PostMapping

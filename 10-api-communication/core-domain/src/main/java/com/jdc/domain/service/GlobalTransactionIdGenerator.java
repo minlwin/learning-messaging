@@ -1,4 +1,4 @@
-package com.jdc.domain;
+package com.jdc.domain.service;
 
 import java.time.LocalDate;
 
@@ -7,23 +7,22 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jdc.domain.entity.WalletTransactionSeq;
-import com.jdc.domain.repo.WalletTransactionSeqRepo;
+import com.jdc.domain.entity.GlobalTransactionSeq;
+import com.jdc.domain.repo.GlobalTransactionSeqRepo;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRES_NEW)
-public class WalletTransactionIdGenerator {
+public class GlobalTransactionIdGenerator {
 
-	private final WalletTransactionSeqRepo repo;
+	private final GlobalTransactionSeqRepo repo;
 	
 	@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRES_NEW)
 	public String next(LocalDate issueAt) {
 		var seq = repo.findById(issueAt)
-			.orElseGet(() -> repo.save(new WalletTransactionSeq(issueAt)));
+			.orElseGet(() -> repo.save(new GlobalTransactionSeq(issueAt)));
 		return seq.next().code();
 	}
-
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jdc.agent.api.input.AgentAccountForm;
+import com.jdc.agent.api.input.AgentAccountSearch;
 import com.jdc.agent.api.output.AgentAccountInfo;
 import com.jdc.agent.ws.AgentAccountManagementService;
 
@@ -25,8 +26,8 @@ public class AccountManagementApi {
 	private final AgentAccountManagementService service;
 
 	@GetMapping
-	List<AgentAccountInfo> findAll() {
-		return service.findAll();
+	List<AgentAccountInfo> search(AgentAccountSearch search) {
+		return service.search(search);
 	}
 	
 	@PostMapping

@@ -26,6 +26,9 @@ public class WalletTransaction {
 	private String globalNumber;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	private AccountForWallet consumer;
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private AccountForAgent agent;
 	
 	private BigDecimal amount;

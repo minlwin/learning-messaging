@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jdc.wallet.api.input.WalletHistorySearch;
 import com.jdc.wallet.api.output.WalletAccountHistoryInfo;
+import com.jdc.wallet.service.AccountHistoryService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,9 +16,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("history")
 public class AccountHistoryApi {
+	
+	private final AccountHistoryService service;
 
 	@GetMapping
-	List<WalletAccountHistoryInfo> findAll() {
-		return null;
+	List<WalletAccountHistoryInfo> search(WalletHistorySearch search) {
+		return service.search(search);
 	}
 }

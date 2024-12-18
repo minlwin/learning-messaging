@@ -1,9 +1,8 @@
 package com.jdc.domain.repo;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
+import com.jdc.domain.BaseRepository;
 import com.jdc.domain.entity.WalletTransaction;
 
-public interface WalletTransactionRepo extends JpaRepository<WalletTransaction, String>{
+public interface WalletTransactionRepo extends BaseRepository<WalletTransaction, String>{
 
 }

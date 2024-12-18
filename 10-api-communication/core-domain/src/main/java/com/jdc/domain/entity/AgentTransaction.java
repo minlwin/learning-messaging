@@ -25,6 +25,9 @@ public class AgentTransaction {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private AccountForAgent agent;
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	private AccountForWallet consumer;
 	
 	private BigDecimal amount;
 	
@@ -36,5 +39,6 @@ public class AgentTransaction {
 	private LocalDateTime createdAt;
 	private LocalDateTime finishedAt;
 	
-	private String remark;
+	private String particular;
+	private String errorMessage;
 }

@@ -1,6 +1,7 @@
 package com.jdc.domain.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -25,6 +26,7 @@ public class AccountForWalletHistory {
 	private BigDecimal previousAmount;
 	private BigDecimal currentAmount;
 	
+	private LocalDateTime issueAt;
 	private String particular;
 	
 }
