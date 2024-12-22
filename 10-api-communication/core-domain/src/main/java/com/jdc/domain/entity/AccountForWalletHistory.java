@@ -24,6 +24,7 @@ public class AccountForWalletHistory {
 	
 	private boolean credit;
 	private BigDecimal previousAmount;
+	private BigDecimal transactionAmount;
 	private BigDecimal currentAmount;
 	
 	private LocalDateTime issueAt;

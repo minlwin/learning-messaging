@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jdc.agent.api.input.TransactionForm;
 import com.jdc.agent.api.input.TransactionSearch;
 import com.jdc.agent.api.output.TransactionInfo;
-import com.jdc.agent.ws.TransactionManagementService;
+import com.jdc.agent.api.service.TransactionManagementService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +32,7 @@ public class TransactionManagementApi {
 	
 	@PostMapping
 	TransactionInfo create(@Validated @RequestBody TransactionForm form, BindingResult result) {
-		return service.create(form);
+		return service.initiate(form);
 	}
 	
 	@GetMapping("{id}")

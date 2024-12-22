@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jdc.agent.api.input.AgentAccountForm;
 import com.jdc.agent.api.input.AgentAccountSearch;
 import com.jdc.agent.api.output.AgentAccountInfo;
-import com.jdc.agent.ws.AgentAccountManagementService;
+import com.jdc.agent.api.service.AgentAccountManagementService;
 
 import lombok.RequiredArgsConstructor;
 

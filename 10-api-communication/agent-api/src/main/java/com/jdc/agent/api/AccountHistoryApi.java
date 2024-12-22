@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jdc.agent.api.input.AgentHistorySearch;
 import com.jdc.agent.api.output.AgentAccountHistoryInfo;
-import com.jdc.agent.ws.AgentAccountHistoryService;
+import com.jdc.agent.api.service.AgentAccountHistoryService;
 
 import lombok.RequiredArgsConstructor;
 
