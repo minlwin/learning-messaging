@@ -16,6 +16,10 @@ public record AgentAccountInfo(
 		String phone,
 		LocalDateTime createdAt,
 		BigDecimal amount) {
+	
+	public static AgentAccountInfo from(AccountForAgent entity) {
+		return new AgentAccountInfo(entity.getId(), entity.getShopName(), entity.getPhone(), entity.getCreatedAt(), entity.getAmount());
+	}
 
 	public static void select(CriteriaQuery<AgentAccountInfo> cq, Root<AccountForAgent> root) {
 		cq.multiselect(

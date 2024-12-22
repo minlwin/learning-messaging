@@ -1,5 +1,11 @@
 package com.jdc.agent.api.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -25,14 +31,49 @@ public class AgentAccountManagementService {
 
 	@Transactional
 	public AgentAccountInfo create(AgentAccountForm form) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		var entity = new AccountForAgent();
+		
+		entity.setPhone(form.phone());
+		entity.setShopName(form.shopName());
+		entity.setAmount(form.amount());
+		entity.setCreatedAt(LocalDateTime.now());
+		
+		entity = agentRepo.save(entity);
+		return AgentAccountInfo.from(entity);
 	}
 
 	@Transactional
 	public List<AgentAccountInfo> upload(MultipartFile file) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<AccountForAgent> list = new ArrayList<AccountForAgent>();
+		
+		try(var br = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+			
+			String line = null;
+			
+			while(null != (line = br.readLine())) {
+				
+				var array = line.split("\t");
+				var entity = new AccountForAgent();
+				
+				entity.setShopName(array[0]);
+				entity.setPhone(array[1]);
+				entity.setAmount(BigDecimal.valueOf(Long.parseLong(array[2])));
+				entity.setCreatedAt(LocalDateTime.now());
+				
+				list.add(entity);
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if(!list.isEmpty()) {
+			list = agentRepo.saveAll(list);
+		}
+		
+		return list.stream().map(AgentAccountInfo::from).toList();
 	}
 
 	@Transactional(readOnly = true)
