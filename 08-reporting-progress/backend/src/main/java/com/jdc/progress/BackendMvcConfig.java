@@ -31,7 +31,6 @@ public class BackendMvcConfig implements WebMvcConfigurer, WebSocketConfigurer {
 		registry.addHandler(progressWebSocketHandler(), "/progress/{uploadId}")
 			.addInterceptors(new ProgressWebSocketInterceptor())
 			.setAllowedOrigins("*");
-		
 	}
 	
 	@Bean

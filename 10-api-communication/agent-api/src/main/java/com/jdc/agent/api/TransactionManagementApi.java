@@ -15,6 +15,7 @@ import com.jdc.agent.api.input.TransactionForm;
 import com.jdc.agent.api.input.TransactionSearch;
 import com.jdc.agent.api.output.TransactionInfo;
 import com.jdc.agent.api.service.TransactionManagementService;
+import com.jdc.agent.rabbit.CashOutInitiationPublisher;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class TransactionManagementApi {
 	
 	private final TransactionManagementService service;
+	private final CashOutInitiationPublisher initiationPublisher;
 
 	@GetMapping
 	List<TransactionInfo> search(TransactionSearch search) {
@@ -32,7 +34,11 @@ public class TransactionManagementApi {
 	
 	@PostMapping
 	TransactionInfo create(@Validated @RequestBody TransactionForm form, BindingResult result) {
-		return service.initiate(form);
+		var info = service.initiate(form);
+		
+		initiationPublisher.publish(info.id());
+		
+		return info;
 	}
 	
 	@GetMapping("{id}")
