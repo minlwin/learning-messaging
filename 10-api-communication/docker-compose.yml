@@ -2,6 +2,7 @@ networks:
   communication:
 volumes:
   communication-db:
+  rabbit:
 
 services:
   db:
@@ -25,3 +26,11 @@ services:
     environment:
       - RABBITMQ_DEFAULT_PASS=secret
       - RABBITMQ_DEFAULT_USER=mqclient
+    networks:
+      - communication
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbit:/var/lib/rabbitmq
+    
