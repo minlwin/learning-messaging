@@ -13,7 +13,7 @@ import com.jdc.wallet.api.input.TransactionStatusForm;
 import com.jdc.wallet.api.output.AgentCashOutInfo;
 import com.jdc.wallet.api.output.AgentCashOutResult;
 import com.jdc.wallet.api.service.AgentTransactionService;
-import com.jdc.wallet.rabbit.CashOutConfirmationPublisher;
+import com.jdc.wallet.messages.CashOutConfirmationPublisher;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,9 +34,7 @@ public class AgentCashOutApi {
 	AgentCashOutResult confirm(
 			@Validated @RequestBody TransactionStatusForm form, BindingResult result) {
 		var info = service.confirm(form);
-		
-		publisher.publish(form);
-		
+		publisher.publish(form.id());
 		return info;
 	}
 }

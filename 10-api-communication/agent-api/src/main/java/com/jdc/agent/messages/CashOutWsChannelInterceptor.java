@@ -1,4 +1,4 @@
-package com.jdc.agent.ws;
+package com.jdc.agent.messages;
 
 import java.util.Map;
 

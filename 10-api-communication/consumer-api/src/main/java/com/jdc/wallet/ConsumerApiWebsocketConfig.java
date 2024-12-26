@@ -6,8 +6,8 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
-import com.jdc.wallet.ws.CashOutWsChannelHandler;
-import com.jdc.wallet.ws.CashOutWsChannelInterceptor;
+import com.jdc.wallet.messages.CashOutWsChannelHandler;
+import com.jdc.wallet.messages.CashOutWsChannelInterceptor;
 
 @Configuration
 @EnableWebSocket

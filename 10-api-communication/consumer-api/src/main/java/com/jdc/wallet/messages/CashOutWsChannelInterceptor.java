@@ -1,4 +1,4 @@
-package com.jdc.wallet.ws;
+package com.jdc.wallet.messages;
 
 import java.util.Map;
 

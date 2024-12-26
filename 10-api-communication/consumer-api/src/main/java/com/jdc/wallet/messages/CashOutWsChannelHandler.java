@@ -1,7 +1,6 @@
-package com.jdc.agent.ws;
+package com.jdc.wallet.messages;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,12 +14,11 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.jdc.domain.repo.AgentTransactionRepo;
-import com.jdc.domain.utils.TransactionStatus;
 
 public class CashOutWsChannelHandler extends TextWebSocketHandler{
 
 	@Autowired
-	private AgentTransactionRepo transactionRepo;
+	private AgentTransactionRepo agentTransactionRepo;
 	
 	private Map<String, WebSocketSession> sessions = Collections.synchronizedMap(new HashMap<>());
 	
@@ -35,26 +33,18 @@ public class CashOutWsChannelHandler extends TextWebSocketHandler{
 	}
 
 	@Override
-	@Transactional
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		var accessKey = session.getAttributes().get("accessKey");
 		
 		if(accessKey instanceof String key) {
 			sessions.remove(key);
-			
-			transactionRepo.findById(key).ifPresent(transaction -> {
-				if(transaction.getStatus() == TransactionStatus.Initiate) {
-					transaction.setStatus(TransactionStatus.Timeout);
-					transaction.setFinishedAt(LocalDateTime.now());
-				}
-			});
 		}
 	}
 	
 	@Transactional(readOnly = true)
-	@RabbitListener(queues = "#{confirmationQueue.name}")
-	public void confirmed(String message) {
-		transactionRepo.findById(message).ifPresent(agentTrx -> {
+	@RabbitListener(queues = "#{inititationQueue.name}")
+	public void initiated(String message) {
+		agentTransactionRepo.findById(message).ifPresent(agentTrx -> {
 			var consumerPhone = agentTrx.getConsumer().getPhone();
 			
 			var session = sessions.get(consumerPhone);
@@ -69,5 +59,6 @@ public class CashOutWsChannelHandler extends TextWebSocketHandler{
 				}
 			}
 		});
-	}	
+	}
+	
 }

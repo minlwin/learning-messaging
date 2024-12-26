@@ -15,7 +15,7 @@ import com.jdc.agent.api.input.TransactionForm;
 import com.jdc.agent.api.input.TransactionSearch;
 import com.jdc.agent.api.output.TransactionInfo;
 import com.jdc.agent.api.service.TransactionManagementService;
-import com.jdc.agent.rabbit.CashOutInitiationPublisher;
+import com.jdc.agent.messages.CashOutInitiationPublisher;
 
 import lombok.RequiredArgsConstructor;
 
