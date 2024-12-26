@@ -3,7 +3,7 @@ package com.jdc.domain.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.jdc.domain.utils.Status;
+import com.jdc.domain.utils.TransactionStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,7 +22,7 @@ public class WalletTransaction {
 	@Id
 	private String id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String globalNumber;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -36,7 +36,7 @@ public class WalletTransaction {
 	@OneToOne
 	private AgentTransaction agentTrx;
 	
-	private Status status;
+	private TransactionStatus status;
 	
 	private LocalDateTime createdAt;
 	private LocalDateTime finishedAt;

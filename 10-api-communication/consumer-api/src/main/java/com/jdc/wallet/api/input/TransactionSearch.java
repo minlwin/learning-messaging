@@ -8,13 +8,13 @@ import org.springframework.util.StringUtils;
 import com.jdc.domain.entity.AccountForWallet_;
 import com.jdc.domain.entity.WalletTransaction;
 import com.jdc.domain.entity.WalletTransaction_;
-import com.jdc.domain.utils.Status;
+import com.jdc.domain.utils.TransactionStatus;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public record TransactionSearch(LocalDate from, LocalDate to, String phone, Status status) {
+public record TransactionSearch(LocalDate from, LocalDate to, String phone, TransactionStatus status) {
 
 	public Predicate[] where(CriteriaBuilder cb, Root<WalletTransaction> root) {
 		

@@ -1,4 +1,4 @@
-package com.jdc.wallet.service;
+package com.jdc.wallet.api.service;
 
 import java.util.List;
 import java.util.function.Function;

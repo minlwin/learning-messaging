@@ -1,4 +1,4 @@
-package com.jdc.wallet.service;
+package com.jdc.wallet.api.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jdc.wallet.api.input.TransactionSearch;
 import com.jdc.wallet.api.output.TransactionInfo;
-import com.jdc.wallet.service.TransactionManagementService;
+import com.jdc.wallet.api.service.TransactionManagementService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,4 +29,6 @@ public class TransactionManagementApi {
 	TransactionInfo findById(@PathVariable String id) {
 		return service.findById(id);
 	}
+	
+	
 }

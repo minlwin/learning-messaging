@@ -18,7 +18,7 @@ import com.jdc.domain.repo.AccountForWalletRepo;
 import com.jdc.domain.repo.AgentTransactionRepo;
 import com.jdc.domain.service.AgentTransactionIdGenerator;
 import com.jdc.domain.service.GlobalTransactionIdGenerator;
-import com.jdc.domain.utils.Status;
+import com.jdc.domain.utils.TransactionStatus;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -54,7 +54,7 @@ public class TransactionManagementService {
 		transaction.setAmount(form.amount());
 		transaction.setParticular(form.particular());
 		transaction.setCreatedAt(LocalDateTime.now());
-		transaction.setStatus(Status.Initiate);
+		transaction.setStatus(TransactionStatus.Initiate);
 		
 		transaction = transactionRepo.save(transaction);
 		

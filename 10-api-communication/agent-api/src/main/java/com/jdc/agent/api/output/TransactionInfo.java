@@ -8,7 +8,7 @@ import com.jdc.domain.entity.AccountForAgent_;
 import com.jdc.domain.entity.AccountForWallet_;
 import com.jdc.domain.entity.AgentTransaction;
 import com.jdc.domain.entity.AgentTransaction_;
-import com.jdc.domain.utils.Status;
+import com.jdc.domain.utils.TransactionStatus;
 
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -25,7 +25,7 @@ public record TransactionInfo(
 		BigDecimal amount,
 		LocalDateTime issueAt,
 		LocalDateTime finishAt,
-		Status status,
+		TransactionStatus status,
 		String particular,
 		String errorMessage) {
 	

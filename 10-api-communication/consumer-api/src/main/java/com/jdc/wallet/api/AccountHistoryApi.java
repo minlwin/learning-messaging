@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jdc.wallet.api.input.WalletHistorySearch;
 import com.jdc.wallet.api.output.WalletAccountHistoryInfo;
-import com.jdc.wallet.service.AccountHistoryService;
+import com.jdc.wallet.api.service.AccountHistoryService;
 
 import lombok.RequiredArgsConstructor;
 

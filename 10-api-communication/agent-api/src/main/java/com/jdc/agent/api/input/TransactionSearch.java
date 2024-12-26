@@ -8,13 +8,13 @@ import org.springframework.util.StringUtils;
 import com.jdc.domain.entity.AccountForAgent_;
 import com.jdc.domain.entity.AgentTransaction;
 import com.jdc.domain.entity.AgentTransaction_;
-import com.jdc.domain.utils.Status;
+import com.jdc.domain.utils.TransactionStatus;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public record TransactionSearch(LocalDate from, LocalDate to, String phone, Status status) {
+public record TransactionSearch(LocalDate from, LocalDate to, String phone, TransactionStatus status) {
 
 	public Predicate[] where(CriteriaBuilder cb, Root<AgentTransaction> root) {
 		

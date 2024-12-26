@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jdc.wallet.api.input.WalletAccountForm;
 import com.jdc.wallet.api.input.WalletAccountSearch;
 import com.jdc.wallet.api.output.WalletAccountInfo;
-import com.jdc.wallet.service.AccountManagementService;
+import com.jdc.wallet.api.service.AccountManagementService;
 
 import lombok.RequiredArgsConstructor;
 
