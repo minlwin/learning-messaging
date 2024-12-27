@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -49,6 +50,7 @@ public class AccountManagementService {
 				entity.setName(array[0]);
 				entity.setPhone(array[1]);
 				entity.setAmount(BigDecimal.valueOf(Integer.parseInt(array[2])));
+				entity.setCreatedAt(LocalDateTime.now());
 				
 				list.add(entity);
 			}

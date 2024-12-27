@@ -1,0 +1,214 @@
+{
+	"info": {
+		"_postman_id": "f710cb55-8703-4bd9-bed2-b51b93aa9fbb",
+		"name": "communication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2989298",
+		"_collection_link": "https://lively-satellite-430517.postman.co/workspace/10-Communications~d4fc76b3-761c-496e-a366-8d1399a6bfb4/collection/2989298-f710cb55-8703-4bd9-bed2-b51b93aa9fbb?action=share&source=collection_link&creator=2989298"
+	},
+	"item": [
+		{
+			"name": "preparation",
+			"item": [
+				{
+					"name": "load-agents",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/minlwin/Desktop/communitations/agents.txt"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{agentApi}}/account/upload",
+							"host": [
+								"{{agentApi}}"
+							],
+							"path": [
+								"account",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetch-agents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{agentApi}}/account",
+							"host": [
+								"{{agentApi}}"
+							],
+							"path": [
+								"account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "load-consumers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/minlwin/Desktop/communitations/consumers.txt"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{consumerApi}}/account/upload",
+							"host": [
+								"{{consumerApi}}"
+							],
+							"path": [
+								"account",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetch-consumers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{consumerApi}}/account",
+							"host": [
+								"{{consumerApi}}"
+							],
+							"path": [
+								"account"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transaction",
+			"item": [
+				{
+					"name": "initiate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"agent\" : \"0988889999\",\n    \"consumer\" : \"0955554444\",\n    \"amount\" : \"30000\",\n    \"particular\" : \"Test Transaction\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{agentApi}}/transaction",
+							"host": [
+								"{{agentApi}}"
+							],
+							"path": [
+								"transaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "confirm",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{agentWsKey}}\",\n    \"confirmed\" : \"true\",\n    \"remark\" : \"Test Remark\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{consumerApi}}/cashout/agent",
+							"host": [
+								"{{consumerApi}}"
+							],
+							"path": [
+								"cashout",
+								"agent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get transaction info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{consumerApi}}/cashout/agent?phone=0955554444&cashOutId={{agentWsKey}}",
+							"host": [
+								"{{consumerApi}}"
+							],
+							"path": [
+								"cashout",
+								"agent"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "0955554444"
+								},
+								{
+									"key": "cashOutId",
+									"value": "{{agentWsKey}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.request.addHeader({\"Content-Type\": \"application/json\"})"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

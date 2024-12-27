@@ -54,20 +54,16 @@ public class CashOutWsChannelHandler extends TextWebSocketHandler{
 	@Transactional(readOnly = true)
 	@RabbitListener(queues = "#{confirmationQueue.name}")
 	public void confirmed(String message) {
-		transactionRepo.findById(message).ifPresent(agentTrx -> {
-			var consumerPhone = agentTrx.getConsumer().getPhone();
-			
-			var session = sessions.get(consumerPhone);
-			
-			if(null != session) {
-				try {
-					// Consider about agent transaction id or confirmation information
-					session.sendMessage(new TextMessage(message));
-				} catch (IOException e) {
-					e.printStackTrace();
-					sessions.remove(consumerPhone);
-				}
+		var session = sessions.get(message);
+		
+		if(null != session) {
+			try {
+				// Consider about agent transaction id or confirmation information
+				session.sendMessage(new TextMessage(message));
+			} catch (IOException e) {
+				e.printStackTrace();
+				sessions.remove(message);
 			}
-		});
+		}
 	}	
 }
